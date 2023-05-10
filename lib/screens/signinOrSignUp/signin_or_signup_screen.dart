@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/primary_button.dart';
 import '../../constants.dart';
+import '../../main_provider.dart';
 import '../chats/chats_screen.dart';
 
 class SigninOrSignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeMode = Provider.of<ThemeModeProvider>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: Column(
             children: [
               Spacer(flex: 2),
               Image.asset(
-                MediaQuery.of(context).platformBrightness == Brightness.light
-                    ? "assets/images/Logo_light.png"
-                    : "assets/images/Logo_dark.png",
+                themeMode.getThemeDark()
+                    ? "assets/images/Logo_dark.png"
+                    : "assets/images/Logo_light.png",
                 height: 146,
               ),
               Spacer(),

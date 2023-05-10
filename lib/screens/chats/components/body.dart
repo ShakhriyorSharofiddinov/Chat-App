@@ -12,13 +12,13 @@ class Body extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.fromLTRB(
+          padding: const EdgeInsets.fromLTRB(
               kDefaultPadding, 0, kDefaultPadding, kDefaultPadding),
           color: kPrimaryColor,
           child: Row(
             children: [
               FillOutlineButton(press: () {}, text: "Recent Message"),
-              SizedBox(width: kDefaultPadding),
+              const SizedBox(width: kDefaultPadding),
               FillOutlineButton(
                 press: () {},
                 text: "Active",
@@ -29,6 +29,9 @@ class Body extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()
+            ),
             itemCount: chatsData.length,
             itemBuilder: (context, index) => ChatCard(
               chat: chatsData[index],

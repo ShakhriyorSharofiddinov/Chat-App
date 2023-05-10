@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants.dart';
+import '../../main.dart';
+import '../../main_provider.dart';
 import 'components/body.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -10,6 +14,7 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen> {
   int _selectedIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +41,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           _selectedIndex = value;
         });
       },
-      items: [
+      items: const [
         BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "People"),
         BottomNavigationBarItem(icon: Icon(Icons.call), label: "Calls"),
@@ -52,14 +57,21 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   AppBar buildAppBar() {
+    final themeMode = Provider.of<ThemeModeProvider>(context, listen: false);
     return AppBar(
       backgroundColor: kPrimaryColor,
       automaticallyImplyLeading: false,
-      title: Text("Chats"),
+      title: const Text("Chats"),
       actions: [
         IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              themeMode.setThemeDark();
+            });
+          },
+          icon: themeMode.getThemeDark()
+              ? const Icon(Icons.dark_mode)
+              : const Icon(Icons.dark_mode_outlined),
         ),
       ],
     );
